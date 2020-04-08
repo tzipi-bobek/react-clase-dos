@@ -8,6 +8,7 @@ import FocusableInput from './FocusableInput';
 import UglyClass from './UglyClass';
 import FancyButton from '../small/FancyButton';
 import TicTacToe from './TicTacToe';
+import Memotest from './Memotest/Memotest';
 
 const pages = {
   home: {
@@ -38,10 +39,14 @@ const pages = {
     name: 'Tic Tac Toe',
     component: TicTacToe,
   },
+  memoTest: {
+    name: 'Memo test',
+    component: Memotest,
+  },
 };
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('home');
+  const [currentPage, setCurrentPage] = useState('memoTest');
   const CurrentComponent = pages[currentPage].component;
   return (
     <div className="app">
