@@ -1,0 +1,61 @@
+.memotest-wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+}  
+
+.columna-juego{
+    background-color: white;
+    border: 1px solid black;
+}
+
+.fila-juego {
+    height: 21.5vh;
+}
+
+.flipped{
+    opacity: 1
+}
+
+.cuadro:not(.flipped) {
+    opacity: 0;
+}
+
+.cuadro {
+    transition: opacity ease 0.2s;
+    width: 200px;
+    height: 160px;
+    border: 1px solid;
+    padding: 10px;
+}
+
+.rojo {
+    background-color: red;
+}
+
+.verde {
+    background-color: green;
+}
+
+.amarillo {
+    background-color: yellow;
+}
+
+.negro {
+    background-color: black;
+}
+
+.violeta {
+    background-color: purple;
+}
+
+.azul {
+    background-color: blue;
+}
+
+.gris {
+    background: darkgrey;
+}
