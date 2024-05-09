@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 
 const crearCuadros = () => {
   let cuadros= [];
-  const coloresBase = ['rojo', 'azul', 'verde', 'amarillo', 'negro', 'violeta'];
+  const coloresBase = ['red', 'blue', 'green', 'yellow', 'black', 'purple'];
   coloresBase.forEach((color) => {
     cuadros.push({color, key: `${color} 1`}, {color, key: `${color} 2`})
   })

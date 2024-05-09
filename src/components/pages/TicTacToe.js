@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
-import './TicTacToe.css';
+import styled from '@emotion/styled';
 import FancyButton from '../small/FancyButton';
 
 /* 
@@ -24,36 +23,53 @@ import FancyButton from '../small/FancyButton';
   Esto les dará algunas pistas
 */
 
-const Square = ({ value, onClick = () => {} }) => {
-  return (
-    <div onClick={onClick} className="square">
-      {value}
-    </div>
-  );
-};
+const Square = styled.div`
+  width: 100px;
+  height: 100px;
+  background: white;
+  border: 1px solid black;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 70px;
+`;
 Square.propTypes = {
   value: PropTypes.oneOf(['X', 'O', '']),
   onClick: PropTypes.func,
 };
 
-const WinnerCard = ({ show, winner, onRestart = () => {} }) => {
-  return (
-    <div className={cx('winner-card', { 'winner-card--hidden': !show })}>
-      <span className="winner-card-text">
-        {winner ? `Player ${winner} has won the game!` : "It's a tie!"}
-      </span>
-      <FancyButton onClick={onRestart}>Play again?</FancyButton>
-    </div>
-  );
+const TicTacToeWrapper = styled.div`
+  position: relative;
+`;
+
+const TicTacToeRow = styled.div`
+  display: flex;
+`;
+
+const WinnerCard = styled.div`
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background: #365324;
+  opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  flex-direction: column;
+  color: black;
+  transition: ${props => !props.show ? 'none' : 'opacity ease-in-out 0.7s'};
+  pointer-events: ${props => !props.show ? 'none' : 'auto'};
+  opacity: ${props => !props.show ? 0 : 1};
+`;
+WinnerCard.propTypes = {
+  show: PropTypes.bool.isRequired,
 };
 
-WinnerCard.propTypes = {
-  // Esta propiedad decide si el componente se muestra o está oculto
-  // También se podría mostrar el componente usando un if (&&), pero usamos esta prop para mostrar los estilos correctamente.
-  show: PropTypes.bool.isRequired,
-  winner: PropTypes.oneOf(['X', 'O']),
-  onRestart: PropTypes.func,
-};
+const WinnerCardText = styled.span`
+  margin-bottom: 10px;
+`;
 
 const getWinner = tiles => {
   for (let i = 0; i < 3; i++) {
@@ -116,23 +132,26 @@ const TicTacToe = () => {
   const { tiles, currentPlayer, winner, gameEnded, setTileTo, restart } = useTicTacToeGameState('X');
 
   return (
-    <div className="tictactoe">
-      <WinnerCard show={gameEnded} winner={winner} onRestart={restart} />
+    <TicTacToeWrapper>
+      <WinnerCard show={gameEnded} winner={winner}>
+        <WinnerCardText>
+          {winner ? `Player ${winner} has won the game!` : "It's a tie!"}
+        </WinnerCardText>
+        <FancyButton onClick={restart}>Play again?</FancyButton>
+      </WinnerCard>
       {Array.from({ length: 3 }).map((_, rowIndex) => (
-        <div key={rowIndex} className="tictactoe-row">
+        <TicTacToeRow key={rowIndex}>
           {Array.from({ length: 3 }).map((_, colIndex) => {
             const tileIndex = rowIndex * 3 + colIndex;
             return (
-              <Square
-                key={tileIndex}
-                value={tiles[tileIndex]}
-                onClick={() => setTileTo(tileIndex, currentPlayer)}
-              />
+              <Square key={tileIndex} onClick={() => setTileTo(tileIndex, currentPlayer)}>
+                {tiles[tileIndex]}
+              </Square>
             );
           })}
-        </div>
+        </TicTacToeRow>
       ))}
-    </div>
+    </TicTacToeWrapper>
   );
 };
 
